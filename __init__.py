@@ -121,13 +121,13 @@ def rechercher_livres():
         cursor = conn.cursor()
 
         # Exécution de la requête SQL pour rechercher des livres
-        cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', (terme_recherche))
+        cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', ('%' + terme_recherche + '%',))
         livres = cursor.fetchall()
 
         conn.close()
 
         # Rendre le template HTML et transmettre les résultats de la recherche
-        return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
+        return render_template('resultats_recherche.html')
 
     # Si la méthode HTTP est GET, afficher simplement le formulaire de recherche
     return render_template('formulaire_recherche.html')
