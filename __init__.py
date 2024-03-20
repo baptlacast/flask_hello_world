@@ -121,7 +121,7 @@ def rechercher_livres():
         cursor = conn.cursor()
 
         # Exécution de la requête SQL pour rechercher des livres
-        cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', ('%' + terme_recherche + '%'))
+        cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', (terme_recherche))
         livres = cursor.fetchall()
 
         conn.close()
