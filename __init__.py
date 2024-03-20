@@ -116,11 +116,17 @@ def afficher_formulaire_recherche():
     return render_template('formulaire_recherche.html')
 
 
-@app.route('/rechercher_livres', methods=['POST'])
+@app.route('/resultats_recherche', methods=['POST'])
 def executer_recherche_livres():
     # Récupérer le terme de recherche depuis le formulaire
     terme_recherche = request.form['terme_recherche']
 
+    # Redirection vers une nouvelle route pour afficher les résultats de recherche
+    return redirect(url_for('afficher_resultats_recherche', terme_recherche=terme_recherche))
+
+
+@app.route('/resultats_recherche/<terme_recherche>', methods=['GET'])
+def afficher_resultats_recherche(terme_recherche):
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -133,6 +139,7 @@ def executer_recherche_livres():
 
     # Rendre le template HTML et transmettre les résultats de la recherche
     return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
+
 
 
 
