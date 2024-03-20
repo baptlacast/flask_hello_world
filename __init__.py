@@ -110,27 +110,30 @@ def supprimer_livres():
 
 
 
-@app.route('/rechercher_livres', methods=['GET', 'POST'])
-def rechercher_livres():
-    if request.method == 'POST':
-        # Récupérer le terme de recherche depuis le formulaire
-        terme_recherche = request.form['terme_recherche']
-
-        # Connexion à la base de données
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-
-        # Exécution de la requête SQL pour rechercher des livres
-        cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', ('%' + terme_recherche + '%',))
-        livres = cursor.fetchall()
-
-        conn.close()
-
-        # Rendre le template HTML et transmettre les résultats de la recherche
-        return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
-
-    # Si la méthode HTTP est GET, afficher simplement le formulaire de recherche
+@app.route('/rechercher_livres', methods=['GET'])
+def afficher_formulaire_recherche():
+    # Afficher simplement le formulaire de recherche
     return render_template('formulaire_recherche.html')
+
+
+@app.route('/rechercher_livres', methods=['POST'])
+def executer_recherche_livres():
+    # Récupérer le terme de recherche depuis le formulaire
+    terme_recherche = request.form['terme_recherche']
+
+    # Connexion à la base de données
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Exécution de la requête SQL pour rechercher des livres
+    cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', ('%' + terme_recherche + '%',))
+    livres = cursor.fetchall()
+
+    conn.close()
+
+    # Rendre le template HTML et transmettre les résultats de la recherche
+    return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
+
 
 
 
