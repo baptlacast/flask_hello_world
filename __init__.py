@@ -127,7 +127,7 @@ def rechercher_livres():
         conn.close()
 
         # Rendre le template HTML et transmettre les résultats de la recherche
-        return render_template('resultats_recherche.html')
+        return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
 
     # Si la méthode HTTP est GET, afficher simplement le formulaire de recherche
     return render_template('formulaire_recherche.html')
