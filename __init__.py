@@ -111,22 +111,10 @@ def supprimer_livres():
 
 
 @app.route('/rechercher_livres', methods=['GET'])
-def afficher_formulaire_recherche():
-    # Afficher simplement le formulaire de recherche
-    return render_template('formulaire_recherche.html')
+def rechercher_livres():
+    # Récupérer le terme de recherche depuis l'URL
+    terme_recherche = request.args.get('titre_livre')
 
-
-@app.route('/rechercher_livres', methods=['POST'])
-def executer_recherche_livres():
-    # Récupérer le terme de recherche depuis le formulaire
-    terme_recherche = request.form['terme_recherche']
-
-    # Rediriger vers la route qui affichera les résultats de la recherche
-    return redirect(url_for('afficher_resultats_recherche', terme_recherche=terme_recherche))
-
-
-@app.route('/resultats_recherche/<terme_recherche>', methods=['GET'])
-def afficher_resultats_recherche(terme_recherche):
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -138,7 +126,8 @@ def afficher_resultats_recherche(terme_recherche):
     conn.close()
 
     # Rendre le template HTML et transmettre les résultats de la recherche
-    return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
+    return render_template('formulaire_recherche.html', livres=livres, terme_recherche=terme_recherche)
+
 
 
 
