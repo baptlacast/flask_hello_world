@@ -115,6 +115,11 @@ def rechercher_livres():
     # Récupérer le terme de recherche depuis l'URL
     terme_recherche = request.args.get('titre_livre')
 
+    # Vérifier si terme_recherche est None
+    if terme_recherche is None:
+        # Si terme_recherche est None, rediriger vers le formulaire de recherche
+        return redirect('/formulaire_recherche')
+
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -126,7 +131,8 @@ def rechercher_livres():
     conn.close()
 
     # Rendre le template HTML et transmettre les résultats de la recherche
-    return render_template('formulaire_recherche.html', livres=livres, terme_recherche=terme_recherche)
+    return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
+
 
 
 
