@@ -118,7 +118,7 @@ def rechercher_livres():
     # Vérifier si terme_recherche est None
     if terme_recherche is None:
         # Si terme_recherche est None, rediriger vers le formulaire de recherche
-        return redirect('/formulaire_recherche')
+        return redirect('/rechercher_livres')
 
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
