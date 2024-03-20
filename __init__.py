@@ -67,6 +67,32 @@ def Readlivres():
     conn.close()
     return render_template('livres.html', data=data)
 
+
+@app.route('/enregistrer_livres', methods=['GET'])
+def formulaire_livres():
+    return render_template('formulaire_livres.html')  # afficher le formulaire
+
+@app.route('/enregistrer_livres', methods=['POST'])
+def enregistrer_client():
+    titre = request.form['titre']
+    auteur = request.form['auteur']
+
+    # Connexion à la base de données
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Exécution de la requête SQL pour insérer un nouveau client
+    cursor.execute('INSERT INTO livres (titre, auteur) VALUES (?, ?)', (titre, auteur)
+    conn.commit()
+    conn.close()
+    return redirect('/livres/')  # Rediriger vers la page d'accueil après l'enregistrement
+
+
+
+
+
+
+
 @app.route('/enregistrer_client', methods=['GET'])
 def formulaire_client():
     return render_template('formulaire.html')  # afficher le formulaire
