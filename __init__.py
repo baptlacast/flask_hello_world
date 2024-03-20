@@ -116,12 +116,12 @@ def afficher_formulaire_recherche():
     return render_template('formulaire_recherche.html')
 
 
-@app.route('/resultats_recherche', methods=['POST'])
+@app.route('/rechercher_livres', methods=['POST'])
 def executer_recherche_livres():
     # Récupérer le terme de recherche depuis le formulaire
     terme_recherche = request.form['terme_recherche']
 
-    # Redirection vers une nouvelle route pour afficher les résultats de recherche
+    # Rediriger vers la route qui affichera les résultats de la recherche
     return redirect(url_for('afficher_resultats_recherche', terme_recherche=terme_recherche))
 
 
@@ -139,6 +139,7 @@ def afficher_resultats_recherche(terme_recherche):
 
     # Rendre le template HTML et transmettre les résultats de la recherche
     return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
+
 
 
 
