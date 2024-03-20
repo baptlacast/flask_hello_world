@@ -89,6 +89,27 @@ def enregistrer_livres():
 
 
 
+@app.route('/supprimer_livres', methods=['GET'])
+def formsupprimer_livres():
+    return render_template('supprimer_livres.html')  # afficher le formulaire
+
+@app.route('/enregistrer_livres', methods=['POST'])
+def supprimer_livres():
+    titre = request.form['titre']
+    
+
+    # Connexion à la base de données
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Exécution de la requête SQL pour insérer un nouveau client
+    cursor.execute('DELETE FROM livres WHERE titre=?'(titre))
+    conn.commit()
+    conn.close()
+    return redirect('/livres/')  # Rediriger vers la page d'accueil après l'enregistrement
+
+
+
 
 @app.route('/enregistrer_client', methods=['GET'])
 def formulaire_client():
