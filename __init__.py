@@ -110,28 +110,7 @@ def supprimer_livres():
 
 
 
-@app.route('/rechercher_livres', methods=['GET'])
-def rechercher_livres():
-    # Récupérer le terme de recherche depuis l'URL
-    terme_recherche = request.args.get('titre_livre')
 
-    # Vérifier si terme_recherche est None
-    if terme_recherche is None:
-        # Si terme_recherche est None, rediriger vers le formulaire de recherche
-        return redirect('/rechercher_livres')
-
-    # Connexion à la base de données
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    # Exécution de la requête SQL pour rechercher des livres
-    cursor.execute('SELECT * FROM livres WHERE titre LIKE ?', ('%' + terme_recherche + '%',))
-    livres = cursor.fetchall()
-
-    conn.close()
-
-    # Rendre le template HTML et transmettre les résultats de la recherche
-    return render_template('resultats_recherche.html', livres=livres, terme_recherche=terme_recherche)
 
 
 
