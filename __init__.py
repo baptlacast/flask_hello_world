@@ -93,7 +93,7 @@ def enregistrer_livres():
 def formsupprimer_livres():
     return render_template('supprimer_livres.html')  # afficher le formulaire
 
-@app.route('/enregistrer_livres', methods=['POST'])
+@app.route('/supprimer_livres', methods=['POST'])
 def supprimer_livres():
     titre = request.form['titre']
     
@@ -103,7 +103,7 @@ def supprimer_livres():
     cursor = conn.cursor()
 
     # Exécution de la requête SQL pour insérer un nouveau client
-    cursor.execute('DELETE FROM livres WHERE titre=?'(titre))
+    cursor.execute('DELETE FROM livres WHERE titre=?', (titre))
     conn.commit()
     conn.close()
     return redirect('/livres/')  # Rediriger vers la page d'accueil après l'enregistrement
